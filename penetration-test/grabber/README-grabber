@@ -1,0 +1,17 @@
+#This file contains instructions on how to run the grabber program.
+# How to run this program
+First open up grabber.py and modify the url you want to capture a screenshot from
+
+## Pre Requisites:
+Ensure you have installed nmap, on your terminal (need root privs), do
+`$ sudo pip install python-nmap`
+
+if you have nmap installed without the 'python-' in the beginning, then a conflict
+will arise.  remove nmap from your library
+`$ sudo pip uninstall nmap`
+
+## Compile and run
+on your terminal do
+`$ python3 -m grabber.py`
+
+If you have a problem ensure you have all required libraries to run it
