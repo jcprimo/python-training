@@ -1,4 +1,5 @@
-#With this file you can create a simple server/client connection
+# Updated: 04/04/20
+# With this file you can create a simple server/client connection]
 # This example runs a server on your local machine then run the client to establish
 # the communication among client server
 import socket

@@ -1,4 +1,5 @@
-#Basics of client/server TCP communication
+# Updated: 04/04/20
+# Basics of client/server TCP communication
 import socket
 
 host = "127.0.0.1"
