@@ -1,5 +1,7 @@
 #Python OOP
 import datetime
+
+
 class Employee:
 	num_of_emps = 0
 	raise_amt = 1.04
@@ -9,23 +11,23 @@ class Employee:
 		self.last = last
 		self.pay = pay
 		self.email = first + '.' + last + '@ElChingon.com'
-		#within the init, add+1 to the counter employee
+		# Within the init, add+1 to the counter employee
 		Employee.num_of_emps += 1
 
 	def fullname(self):
 		return '{} {}'.format(self.first, self.last)
 
 	def apply_raise(self):
-		#In order to access class variables within the class then add self
+		# In order to access class variables within the class then add self
 		self.pay = int(self.pay * self.raise_amt)
 
-	#Updates the amount of the raise per the class object
+	# Updates the amount of the raise per the class object
 	@classmethod #This is called DECORATOR
 	def set_raise_amt(cls, amount):
 		cls.raise_amt=amount
 
-	#Alternative constructor to create a new employee instance
-	#Example of using classmethods as alternative constructors
+	# Alternative constructor to create a new employee instance
+	# Example of using classmethods as alternative constructors
 	@classmethod
 	def from_string(cls, emp_str):
 		first, last, pay = emp_str.split(",")
@@ -39,20 +41,22 @@ class Employee:
 			return False
 		return True
 
-#Create a new class to demonstrate subclassing
+
+# Create a new class to demonstrate subclassing
 class Developer(Employee):
-	#Through inheritance, Developer class can access all the methods from Employee class
+	# Through inheritance, Developer class can access all the methods from Employee class
 	raise_amt = 1.10
 
 	def __init__(self, first, last, pay, prog_lang):
-		#Declaring the constructor without code repetition
+		# Declaring the constructor without code repetition
 		super().__init__(first, last, pay)
 		self.prog_lang = prog_lang
+
 
 # New class where it takes as parameter a list of employees
 class Manager(Employee):
 	def __init__(self, first, last, pay, employees=None):
-		#Declaring the constructor without code repetition
+		# Declaring the constructor without code repetition
 		super().__init__(first, last, pay)
 		if employees is None:
 			self.employees = []
@@ -71,7 +75,8 @@ class Manager(Employee):
 		for emp in self.employees:
 			print('--> ', emp.fullname())
 
-#At this point the counter is at 0 because we havent created any employees
+
+# At this point the counter is at 0 because we havent created any employees
 print("Total number of employees: ", Employee.num_of_emps)
 
 dev_1 = Developer('Yo', 'Mero', 95000, 'Python')
@@ -92,16 +97,15 @@ mgr_1.print_emps()
 # Updates the raise amount given raise amount
 Employee.set_raise_amt(1.03)
 
-#Example of using @classmethod decorator for an alternative contructor
+# Example of using @classmethod decorator for an alternative contructor
 emp_str_1 = 'Juana,Perez,45000'
 new_emp_1 = Employee.from_string(emp_str_1)
 
 print(dev_1.pay)
 dev_1.apply_raise()
 
-#using staticmehtods to check if it is a work day given a number
+# using staticmehtods to check if it is a work day given a number
 my_date = datetime.date(2020, 5, 26)
-#print(Employee.is_workday(my_date))
 
 # At this point the counter is =2 because we have created two employees
 print("Total number of employees: ", Employee.num_of_emps)
