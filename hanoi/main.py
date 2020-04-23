@@ -1,9 +1,9 @@
 import time
 import sys
 import os
-import hanoi_solver
-import hanoi_ascii
-import towers_manipulation
+from hanoi import hanoi_solver
+from hanoi import hanoi_ascii
+from hanoi import towers_manipulation
 
 
 def main_title():
@@ -59,7 +59,7 @@ def main_menu():
 
 
 def translate_difficulty_level(user_input):
-
+    # LEVEL = TOWER SIZE
     return {"1": 2,
             "2": 3,
             "3": 5,
@@ -80,6 +80,8 @@ def remove_whitespace(user_input):
 def endgame_menu(towers, difficulty_level, moves_counter):
 
     towers_size = translate_difficulty_level(difficulty_level)
+    # if the height is 5 then the min moves is 2^5 - 1 :O :O :O!
+    #2**height-1
     expected_moves = 2**towers_size - 1
 
     print("\n==========================================================")
