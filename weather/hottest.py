@@ -1,7 +1,8 @@
 import requests
 import json
+from city import City
 
-locations=["SAN DIEGO", "EL PASO", "Ciudad Juarez", "Bangkok", "Kiev", "Saigon", "Auckland"]
+locations=["SAN DIEGO", "EL PASO", "Ciudad Juarez", "Bangkok", "Kiev", "Saigon", "Auckland", "Albuquerque"]
 weather_api_url = "http://api.openweathermap.org/data/2.5/weather"
 app_key_id = "8c4bf8d800cb2d722fe41556ce81e1a7"
 APP_ID = "APPID=" + app_key_id
@@ -18,8 +19,11 @@ cities = []
 
 def main():
     cities_info = get_weather_info(locations)
+    # This line sorts the cities by city name
+    cities_info.sort(key=lambda x: x.name, reverse=False)
     # [thing for thing in list_of_things] single line-loops
-    [city.print_info() for city in cities]
+    #[city.print_info() for city in cities]
+    sort_by_city(cities_info)
     hottest = find_hottest(cities_info)
     print("SO HOT IN HERE! = " + hottest.name + " with a temperature of = " + str(hottest.convert_kelvin_to_fahrenheit()))
 
@@ -29,7 +33,6 @@ def main():
     # get_keys(data, keys)
     # raw_cities = data['list']
     # find_hottest(raw_cities)
-
 
 def get_weather_info(locations):
     for location in locations:
@@ -55,6 +58,13 @@ def find_hottest(cities):
             hottest_city = city
     return hottest_city
 
+def sort_by_city(cities):
+	# One line sort function method using an inline lambda function lambda x: x.date
+	# The value for the key param needs to be a value that identifies the sorting property on the object
+	cities.sort(key=lambda x: x.name, reverse=False)
+	 
+	for obj in cities:
+		print("Sorted Date from obj: " +str(obj.name) + " with temperature: " + obj.convert_kelvin_to_celsius())
 
 def get_keys(data, keys):
     if isinstance(data, dict):
@@ -62,28 +72,6 @@ def get_keys(data, keys):
         map(lambda x: get_keys(x, keys), data.values())
     elif isinstance(data, list):
         map(lambda x: get_keys(x, keys), data)
-
-
-class City:
-    def __init__(self, name, temp, lat, lon):
-        self.name = name
-        self.temp = temp
-        self.lat = lat
-        self.lon = lon
-
-    def print_info(self):
-        print("Name => ", self.name, "  Temperature = ", self.temp, " In celsius = ", self.convert_kelvin_to_celsius(),
-              " In Fahrenheit = ", self.convert_kelvin_to_fahrenheit())
-
-    def convert_kelvin_to_celsius(self):
-        return format(self.temp - 273.15, '.2f') + "C"
-
-    def convert_kelvin_to_fahrenheit(self):
-        # Formula is ((K - 273.15) * 9 ) / 5 + 32
-        c = self.convert_kelvin_to_celsius()
-        c = c[:-1]
-        res = (float(c) * 9 / 5) + 32
-        return format(res , '.2f') + "F"
 
 
 if __name__ == "__main__":
