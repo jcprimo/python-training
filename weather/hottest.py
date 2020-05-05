@@ -15,7 +15,17 @@ zoom = "10"
 get_several_cities_url = weather_bbox_url + "?bbox=12,32,15,37,10" + "&" + APP_ID
 # bbox bounding box [lon-left,lat-bottom,lon-right,lat-top,zoom]
 cities = []
-
+#####################################
+# Variables set for display purposes
+#####################################
+tab_length = 4
+total_tabs = 5
+tabs = {
+	"1":"\t",
+	"2":"\t\t",
+	"3":"\t\t\t",
+	"4":"\t\t\t\t"
+}
 
 def main():
     cities_info = get_weather_info(locations)
@@ -25,14 +35,9 @@ def main():
     #[city.print_info() for city in cities]
     sort_by_city(cities_info)
     hottest = find_hottest(cities_info)
+    print("")
     print("SO HOT IN HERE! = " + hottest.name + " with a temperature of = " + str(hottest.convert_kelvin_to_fahrenheit()))
 
-    # res2 = requests.get(get_several_cities_url)
-    # print(get_several_cities_url)
-    # data = res2.json()
-    # get_keys(data, keys)
-    # raw_cities = data['list']
-    # find_hottest(raw_cities)
 
 def get_weather_info(locations):
     for location in locations:
@@ -48,7 +53,7 @@ def get_weather_info(locations):
 
 # To View content
 def pretty_print(data):
-    print(json.dumps(data, indent=4, sort_keys=True))
+    print(json.dumps(data, indent=tab_length, sort_keys=True))
 
 
 def find_hottest(cities):
@@ -62,9 +67,23 @@ def sort_by_city(cities):
 	# One line sort function method using an inline lambda function lambda x: x.date
 	# The value for the key param needs to be a value that identifies the sorting property on the object
 	cities.sort(key=lambda x: x.name, reverse=False)
-	 
-	for obj in cities:
-		print("Sorted Date from obj: " +str(obj.name) + " with temperature: " + obj.convert_kelvin_to_celsius())
+	
+	print("  Location \t\t\t\t        Temperature ")
+	print("-------------------------------------------------------")
+	print("\tCity\t\t\tCelsius \t  Farhenheit\t Kelvin")
+	x=" "
+	for citi in cities:
+		num_spaces = format_text(citi.name)
+		tabs = total_tabs - 5
+		print("  "+str(citi.name) + num_spaces*x + citi.convert_kelvin_to_celsius() + "\t\t\t" + citi.convert_kelvin_to_fahrenheit() + "\t\t " + str(citi.temp))
+
+
+# return the total of tabs missing to enter
+def format_text(s):
+	length = len(s) + 2
+	total_spaces = length - (tab_length * total_tabs)
+	return abs(total_spaces)
+
 
 def get_keys(data, keys):
     if isinstance(data, dict):
@@ -72,7 +91,6 @@ def get_keys(data, keys):
         map(lambda x: get_keys(x, keys), data.values())
     elif isinstance(data, list):
         map(lambda x: get_keys(x, keys), data)
-
 
 if __name__ == "__main__":
     main()
