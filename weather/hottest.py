@@ -2,7 +2,7 @@ import requests
 import json
 from city import City
 
-locations=["SAN DIEGO", "EL PASO", "Ciudad Juarez", "Bangkok", "Kiev", "Saigon", "Auckland", "Albuquerque"]
+locations=["SAN DIEGO", "EL PASO", "Ciudad Juarez", "Bangkok", "Kiev", "Saigon", "Auckland", "Albuquerque", "Bend", "Portland", "Seattle"]
 weather_api_url = "http://api.openweathermap.org/data/2.5/weather"
 app_key_id = "8c4bf8d800cb2d722fe41556ce81e1a7"
 APP_ID = "APPID=" + app_key_id
@@ -41,6 +41,7 @@ def main():
 
 def get_weather_info(locations):
     for location in locations:
+        print("Location to find weather for = " + location)
         get_weather_info_url = weather_api_url + "?q=" + location + "&" + APP_ID
         info = requests.get(get_weather_info_url)
         data = info.json()
@@ -67,15 +68,17 @@ def sort_by_city(cities):
 	# One line sort function method using an inline lambda function lambda x: x.date
 	# The value for the key param needs to be a value that identifies the sorting property on the object
 	cities.sort(key=lambda x: x.name, reverse=False)
-	
-	print("  Location \t\t\t\t        Temperature ")
-	print("-------------------------------------------------------")
-	print("\tCity\t\t\tCelsius \t  Farhenheit\t Kelvin")
+	print(" --------------------------------------------------------")
+	print("| Location \t\t   |\t         Temperature            |")
+	print(" --------------------------------------------------------")
+	print("|\tCity\t\t\tCelsius \t  Farhenheit\t Kelvin |")
+	print(" --------------------------------------------------------")
 	x=" "
 	for citi in cities:
 		num_spaces = format_text(citi.name)
 		tabs = total_tabs - 5
-		print("  "+str(citi.name) + num_spaces*x + citi.convert_kelvin_to_celsius() + "\t\t\t" + citi.convert_kelvin_to_fahrenheit() + "\t\t " + str(citi.temp))
+		temp = str(format(citi.temp , '.2f'))
+		print("| "+str(citi.name) + num_spaces*x + citi.convert_kelvin_to_celsius() + "\t\t\t" + citi.convert_kelvin_to_fahrenheit() + "\t\t " + temp +" |")
 
 
 # return the total of tabs missing to enter
