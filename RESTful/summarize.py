@@ -5,7 +5,7 @@ from smmryapi import SmmryAPI
 import textwrap
 from datetime import datetime
 
-SMMRY_API_KEY="FFDA4CDE15"
+SMMRY_API_KEY=""
 smmry = SmmryAPI(SMMRY_API_KEY)
 global_url="https://api.smmry.com"
 api_url = "&SM_API_KEY=" + SMMRY_API_KEY
